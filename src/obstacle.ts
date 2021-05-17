@@ -9,7 +9,7 @@ class Obstacle {
     constructor(s: p5, engine: Engine) {
         this.s = s;
 
-        this.body = Bodies.rectangle(s.random(0, s.width), s.height * 0.8, 50, 50);
+        this.body = Bodies.rectangle(s.random(0, s.width), s.height * 0.92, 50, 50, { isStatic: true });
 
         World.add(engine.world, [this.body]);
     }
@@ -19,7 +19,7 @@ class Obstacle {
     }
 
     draw() {
-        this.s.fill('green');
+        this.s.fill('grey');
 
         this.s.beginShape()
         this.body.vertices.forEach(vertex => {

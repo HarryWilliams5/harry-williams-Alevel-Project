@@ -11,19 +11,22 @@ var Engine = Matter.Engine,
     Bodies = Matter.Bodies;
 
 let sketch = function (p: p5) {
-    // create an engine
     let engine: Matter.Engine;
     var ground: Matter.Body;
-    let BoxA: Matter.Body;
-    let BoxB: Matter.Body;
     let player: Player;
     let obstacles: Obstacle[]
+    var wallL: Matter.Body;
+    var wallR: Matter.Body;
+    var ceiling: Matter.Body;
 
     p.setup = function () {
-        p.createCanvas(700, 410);
+        p.createCanvas(1425, 800);
 
         engine = Engine.create();
-        ground = Bodies.rectangle(400, 410, 810, 60, { isStatic: true });
+        ground = Bodies.rectangle(712.5, 800, 1425, 80, { isStatic: true });
+        wallL = Bodies.rectangle(-25, 100, 50, 1500, { isStatic: true});
+        wallR = Bodies.rectangle(1450, 100, 50, 1500, { isStatic: true});
+        ceiling = Bodies.rectangle(725, -25, 1450, 50, { isStatic: true})
 
         player = new Player(p, engine);
         obstacles = [];
@@ -31,13 +34,15 @@ let sketch = function (p: p5) {
             obstacles.push(new Obstacle(p, engine));
         }
 
-        World.add(engine.world, [ground]);
+        World.add(engine.world, [ground, wallL, wallR, ceiling]);
+        
+        engine.world.gravity.y = 2;
     };
 
     p.draw = function () {
         Engine.update(engine, p.deltaTime);
 
-        p.background(0);
+        p.background(0, 0, 20);
 
         // Handle updates of game objects
         player.update();
@@ -47,14 +52,38 @@ let sketch = function (p: p5) {
         player.draw();
         obstacles.forEach(o => o.draw());
 
+        p.fill(0, 0, 20);
+        
+        p.beginShape()
+        wallR.vertices.forEach(vertex => {
+            p.vertex(vertex.x, vertex.y);
+        })
+        p.endShape(p.CLOSE);
+
+        p.fill(0, 0, 20);
+        
+        p.beginShape()
+        wallL.vertices.forEach(vertex => {
+            p.vertex(vertex.x, vertex.y);
+        })
+        p.endShape(p.CLOSE);
+
         // Draw ground
-        p.fill('brown');
+        p.fill('white');
 
         p.beginShape()
         ground.vertices.forEach(vertex => {
             p.vertex(vertex.x, vertex.y);
         })
         p.endShape(p.CLOSE);
+
+        p.fill('white')
+
+        p.beginShape()
+        ceiling.vertices.forEach(vertex => {
+            p.vertex(vertex.x, vertex.y);
+        })
+        p.endShape(p.CLOSE)
     };
 };
 
