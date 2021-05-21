@@ -6,10 +6,12 @@ class Obstacle {
     s: p5;
     body: Body;
 
-    constructor(s: p5, engine: Engine) {
+    constructor(s: p5, engine: Engine, positionx: number) {
         this.s = s;
 
-        this.body = Bodies.rectangle(s.random(0, s.width), s.height * 0.92, 50, 50, { isStatic: true });
+        this.body = Bodies.polygon(positionx, 750, 3, 20, { isStatic: true});
+        Body.rotate(this.body, Math.PI/2)
+ 
 
         World.add(engine.world, [this.body]);
     }
