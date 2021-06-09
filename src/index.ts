@@ -9,6 +9,7 @@ import Obstacle from "./obstacle"
 var Engine = Matter.Engine,
     World = Matter.World,
     Bodies = Matter.Bodies;
+    var SAT: any = (Matter as any).SAT
 
 let sketch = function (p: p5) {
     let engine: Matter.Engine;
@@ -25,7 +26,7 @@ let sketch = function (p: p5) {
         let spikes: number[] = [1000, 965, 930, 895, 860]
 
         engine = Engine.create();
-        ground = Bodies.rectangle(712.5, 1160, 1425, 800, { isStatic: true });
+        ground = Bodies.rectangle(712.5, 4760, 1800, 8000, { isStatic: true });
         wallL = Bodies.rectangle(-25, 100, 50, 1500, { isStatic: true});
         wallR = Bodies.rectangle(1450, 100, 50, 1500, { isStatic: true});
         ceiling = Bodies.rectangle(725, -25, 1450, 50, { isStatic: true})
@@ -89,7 +90,16 @@ let sketch = function (p: p5) {
             p.vertex(vertex.x, vertex.y);
         })
         p.endShape(p.CLOSE)
+
+        //check if the player is grounded
+        let collisonA = SAT.collides(player.body, ground);
+        if (collisonA.colloided) {
+            player.Grounded = true
+        }
+        console.log(player.Grounded)
+
     };
 };
+
 
 let myp5 = new p5(sketch);

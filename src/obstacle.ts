@@ -1,16 +1,18 @@
 import * as p5 from 'p5';
 
 import { Body, Bodies, Engine, World } from 'matter-js';
+import Player from './player';
 
 class Obstacle {
     s: p5;
     body: Body;
-
+  
     constructor(s: p5, engine: Engine, positionx: number) {
         this.s = s;
 
         this.body = Bodies.polygon(positionx, 750, 3, 20, { isStatic: true});
         Body.rotate(this.body, Math.PI/2)
+        
  
 
         World.add(engine.world, [this.body]);
