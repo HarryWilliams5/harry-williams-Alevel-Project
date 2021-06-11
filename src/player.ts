@@ -19,13 +19,13 @@ class Player {
 
     update() {
         if (this.s.keyIsDown(87) && this.Grounded == true) {
-            Body.applyForce(this.body, this.body.position, { x: 0, y: -0.02 });
+            Body.applyForce(this.body, this.body.position, { x: 0, y: -0.075 });
         } 
         if (this.s.keyIsDown(65)) {
-            Body.applyForce(this.body, this.body.position, { x: -0.01, y: 0 });
+            Body.applyForce(this.body, this.body.position, { x: -0.005, y: 0 });
         }
         if (this.s.keyIsDown(68)) {
-            Body.applyForce(this.body, this.body.position, { x: +0.01, y: 0 });
+            Body.applyForce(this.body, this.body.position, { x: +0.005, y: 0 });
         }   
         if (this.s.keyIsDown(83)) {
             Body.applyForce(this.body, this.body.position, { x: 0, y: +0.1})

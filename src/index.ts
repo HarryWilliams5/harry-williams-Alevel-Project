@@ -9,6 +9,7 @@ import Obstacle from "./obstacle"
 var Engine = Matter.Engine,
     World = Matter.World,
     Bodies = Matter.Bodies;
+    //allows collision detection
     var SAT: any = (Matter as any).SAT
 
 let sketch = function (p: p5) {
@@ -39,7 +40,10 @@ let sketch = function (p: p5) {
 
         World.add(engine.world, [ground, wallL, wallR, ceiling]);
         
+        //changeable gravity
         engine.world.gravity.y = 2;
+        //changeable friction
+        player.body.friction = 0
     };
     
 
@@ -93,9 +97,11 @@ let sketch = function (p: p5) {
 
         //check if the player is grounded
         let collisonA = SAT.collides(player.body, ground);
-        if (collisonA.colloided) {
+        if (collisonA.collided) {
             player.Grounded = true
-        }
+        } else 
+        player.Grounded = false
+        //testing if the player is grounded
         console.log(player.Grounded)
 
     };
