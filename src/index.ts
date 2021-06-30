@@ -20,6 +20,7 @@ let sketch = function (p: p5) {
     var wallL: Matter.Body;
     var wallR: Matter.Body;
     var ceiling: Matter.Body;
+    var testBlock:Matter.Body;
 
     p.setup = function () {
         p.createCanvas(1425, 800);
@@ -31,6 +32,7 @@ let sketch = function (p: p5) {
         wallL = Bodies.rectangle(-25, 100, 50, 1500, { isStatic: true});
         wallR = Bodies.rectangle(1450, 100, 50, 1500, { isStatic: true});
         ceiling = Bodies.rectangle(725, -25, 1450, 50, { isStatic: true})
+        testBlock = Bodies.rectangle(1200, 700, 100, 100, { isStatic: true})
 
         player = new Player(p, engine);
         obstacles = [];
@@ -42,13 +44,35 @@ let sketch = function (p: p5) {
         
         //changeable gravity
         engine.world.gravity.y = 2;
+
         //changeable friction
-        player.body.friction = 0
+        player.body.friction = 0.01
+        ground.friction = 0.01
+        
     };
     
 
     p.draw = function () {
         Engine.update(engine, p.deltaTime);
+
+        //caps the max velocity at 10 in the right diection
+        if (player.body.velocity.x >= 10) {
+            Matter.Body.setVelocity(player.body, {
+                x: 9,
+                y: player.body.velocity.y,
+            });
+            
+        }
+
+        // caps the max velocity at 10 in the left direction
+        if (player.body.velocity.x <= -10) {
+            Matter.Body.setVelocity(player.body, {
+                x: -9,
+                y: player.body.velocity.y,
+            });
+            
+        }
+
 
         p.background(0, 0, 20);
 
@@ -61,7 +85,7 @@ let sketch = function (p: p5) {
         player.draw();
         obstacles.forEach(o => o.draw());
         
-
+        // Draw boarders
         p.fill(0, 0, 20);
         
         p.beginShape()
@@ -87,6 +111,7 @@ let sketch = function (p: p5) {
         })
         p.endShape(p.CLOSE);
 
+        // Draw Ceiling
         p.fill('white')
 
         p.beginShape()
@@ -103,6 +128,8 @@ let sketch = function (p: p5) {
         player.Grounded = false
         //testing if the player is grounded
         console.log(player.Grounded)
+
+
 
     };
 };

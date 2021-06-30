@@ -10,6 +10,7 @@ class Player {
     constructor(s: p5, engine: Engine) {
         this.s = s;
         this.body = Bodies.rectangle(s.width / 2, s.height / 2, 40, 80);
+        //makes the player stay upright
         Body.setInertia(this.body, Infinity);
         this.Grounded = true
 
