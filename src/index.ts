@@ -20,19 +20,16 @@ let sketch = function (p: p5) {
     var wallL: Matter.Body;
     var wallR: Matter.Body;
     var ceiling: Matter.Body;
-    var testBlock:Matter.Body;
+    var cnv: p5.Renderer;
 
     p.setup = function () {
-        p.createCanvas(1425, 800);
-
-        let spikes: number[] = [1000, 965, 930, 895, 860]
+       
 
         engine = Engine.create();
         ground = Bodies.rectangle(712.5, 4760, 1800, 8000, { isStatic: true });
         wallL = Bodies.rectangle(-25, 100, 50, 1500, { isStatic: true});
         wallR = Bodies.rectangle(1450, 100, 50, 1500, { isStatic: true});
         ceiling = Bodies.rectangle(725, -25, 1450, 50, { isStatic: true})
-        testBlock = Bodies.rectangle(1200, 700, 100, 100, { isStatic: true})
 
         player = new Player(p, engine);
         obstacles = [];
@@ -48,7 +45,9 @@ let sketch = function (p: p5) {
         //changeable friction
         player.body.friction = 0.01
         ground.friction = 0.01
-        
+    
+        cnv = p.createCanvas(1425, 800);
+
     };
     
 
@@ -70,14 +69,13 @@ let sketch = function (p: p5) {
                 x: -9,
                 y: player.body.velocity.y,
             });
-            
         }
 
 
         p.background(0, 0, 20);
 
         // Handle updates of game objects
-        player.update();
+        var posChange = player.update();
         obstacles.forEach(o => o.update());
 
         // Handle drawing of game objects
@@ -85,6 +83,10 @@ let sketch = function (p: p5) {
         player.draw();
         obstacles.forEach(o => o.draw());
         
+
+        cnv.position(posChange.x, posChange.y);
+        
+
         // Draw boarders
         p.fill(0, 0, 20);
         
@@ -128,6 +130,8 @@ let sketch = function (p: p5) {
         player.Grounded = false
         //testing if the player is grounded
         console.log(player.Grounded)
+
+        console.log(player.body.position)
 
 
 
