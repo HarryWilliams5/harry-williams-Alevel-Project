@@ -19,8 +19,6 @@ class Player {
 
 
     update() {
-        var playerPosX = this.body.position.x
-        var playerPosY = this.body.position.y
         // WASD keys move the player
         if (this.s.keyIsDown(87) && this.Grounded == true) {
             Body.applyForce(this.body, this.body.position, { x: 0, y: -0.075 });
@@ -34,10 +32,6 @@ class Player {
         if (this.s.keyIsDown(83)) {
             Body.applyForce(this.body, this.body.position, { x: 0, y: +0.1})
         }
-        var posChange = {x: playerPosX - this.body.position.x, y: playerPosY - this.body.position.y}
-        this.body.position.x = playerPosX
-        this.body.position.y = playerPosY
-        return posChange
     }
 
     draw() {

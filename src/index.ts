@@ -27,14 +27,14 @@ let sketch = function (p: p5) {
 
         engine = Engine.create();
         ground = Bodies.rectangle(712.5, 4760, 1800, 8000, { isStatic: true });
-        wallL = Bodies.rectangle(-25, 100, 50, 1500, { isStatic: true});
-        wallR = Bodies.rectangle(1450, 100, 50, 1500, { isStatic: true});
+        wallL = Bodies.rectangle(-213, 100, 50, 1500, { isStatic: true});
+        wallR = Bodies.rectangle(145000, 100, 50, 1500, { isStatic: true});
         ceiling = Bodies.rectangle(725, -25, 1450, 50, { isStatic: true})
 
         player = new Player(p, engine);
         obstacles = [];
         for (let i = 0; i < 5; i++) {
-            obstacles.push(new Obstacle(p, engine, 860+(i*35)));
+            obstacles.push(new Obstacle(p, engine, 860+(i*35), 'red'));
         }
 
         World.add(engine.world, [ground, wallL, wallR, ceiling]);
@@ -70,7 +70,8 @@ let sketch = function (p: p5) {
                 y: player.body.velocity.y,
             });
         }
-
+        // Sidescrolling
+        p.translate(-player.body.position.x + p.width / 2, 0)
 
         p.background(0, 0, 20);
 
@@ -82,9 +83,6 @@ let sketch = function (p: p5) {
         
         player.draw();
         obstacles.forEach(o => o.draw());
-        
-
-        cnv.position(posChange.x, posChange.y);
         
 
         // Draw boarders

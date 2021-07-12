@@ -6,14 +6,15 @@ import Player from './player';
 class Obstacle {
     s: p5;
     body: Body;
+    colour: string
+    
   
-    constructor(s: p5, engine: Engine, positionx: number) {
+    constructor(s: p5, engine: Engine, positionx: number, colour: string) {
         this.s = s;
-
+        this.colour = colour
+        
         this.body = Bodies.polygon(positionx, 750, 3, 20, { isStatic: true});
         Body.rotate(this.body, Math.PI/2)
-        
- 
 
         World.add(engine.world, [this.body]);
     }
@@ -23,7 +24,8 @@ class Obstacle {
     }
 
     draw() {
-        this.s.fill('grey');
+         
+        this.s.fill ('grey')
 
         this.s.beginShape()
         this.body.vertices.forEach(vertex => {
