@@ -2,9 +2,11 @@ import p5 from 'p5';
 
 import * as Matter from 'matter-js';
 
-import Player from "./player"
+import Player from "./player";
 
-import Obstacle from "./obstacle"
+import Obstacle from "./obstacle";
+
+import Platforms from "./platforms";
 
 var Engine = Matter.Engine,
     World = Matter.World,
@@ -16,7 +18,8 @@ let sketch = function (p: p5) {
     let engine: Matter.Engine;
     var ground: Matter.Body;
     let player: Player;
-    let obstacles: Obstacle[]
+    let obstacles: Obstacle[];
+    let platforms: Platforms[];
     var wallL: Matter.Body;
     var wallR: Matter.Body;
     var ceiling: Matter.Body;
@@ -38,7 +41,7 @@ let sketch = function (p: p5) {
         }
 
         World.add(engine.world, [ground, wallL, wallR, ceiling]);
-        
+         
         //changeable gravity
         engine.world.gravity.y = 2;
 
@@ -83,7 +86,10 @@ let sketch = function (p: p5) {
         
         player.draw();
         obstacles.forEach(o => o.draw());
-        
+
+        // Handle drawing of platforms
+        player.draw();
+        platforms.forEach(z => z.draw());
 
         // Draw boarders
         p.fill(0, 0, 20);

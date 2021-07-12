@@ -3,18 +3,16 @@ import * as p5 from 'p5';
 import { Body, Bodies, Engine, World } from 'matter-js';
 import Player from './player';
 
-class Obstacle {
+class Platforms {
     s: p5;
     body: Body;
-    colour: string;
-    
-  
+    colour: String;
+
     constructor(s: p5, engine: Engine, positionx: number, colour: string) {
         this.s = s;
         this.colour = colour
         
-        this.body = Bodies.polygon(positionx, 750, 3, 20, { isStatic: true});
-        Body.rotate(this.body, Math.PI/2)
+        this.body = Bodies.polygon(500, 500, 4, 20, { isStatic: true});
 
         World.add(engine.world, [this.body]);
     }
@@ -25,7 +23,7 @@ class Obstacle {
 
     draw() {
          
-        this.s.fill ('grey')
+        this.s.fill ('white')
 
         this.s.beginShape()
         this.body.vertices.forEach(vertex => {
@@ -35,4 +33,4 @@ class Obstacle {
     }
 }
 
-export default Obstacle;
+export default Platforms;
