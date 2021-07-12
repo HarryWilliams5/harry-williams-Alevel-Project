@@ -12,7 +12,7 @@ class Platforms {
         this.s = s;
         this.colour = colour
         
-        this.body = Bodies.polygon(500, 500, 4, 20, { isStatic: true});
+        this.body = Bodies.rectangle(positionx, 700, 350, 50, { isStatic: true});
 
         World.add(engine.world, [this.body]);
     }

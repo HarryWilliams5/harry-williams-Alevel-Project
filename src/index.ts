@@ -27,7 +27,6 @@ let sketch = function (p: p5) {
 
     p.setup = function () {
        
-
         engine = Engine.create();
         ground = Bodies.rectangle(712.5, 4760, 1800, 8000, { isStatic: true });
         wallL = Bodies.rectangle(-213, 100, 50, 1500, { isStatic: true});
@@ -35,6 +34,7 @@ let sketch = function (p: p5) {
         ceiling = Bodies.rectangle(725, -25, 1450, 50, { isStatic: true})
 
         player = new Player(p, engine);
+
         obstacles = [];
         for (let i = 0; i < 5; i++) {
             obstacles.push(new Obstacle(p, engine, 860+(i*35), 'red'));
@@ -50,6 +50,10 @@ let sketch = function (p: p5) {
         ground.friction = 0.01
     
         cnv = p.createCanvas(1425, 800);
+
+        platforms = []  
+        platforms.push(new Platforms(p, engine, 500, 'red'));
+
 
     };
     
@@ -83,7 +87,6 @@ let sketch = function (p: p5) {
         obstacles.forEach(o => o.update());
 
         // Handle drawing of game objects
-        
         player.draw();
         obstacles.forEach(o => o.draw());
 
@@ -127,7 +130,7 @@ let sketch = function (p: p5) {
         p.endShape(p.CLOSE)
 
         //check if the player is grounded
-        let collisonA = SAT.collides(player.body, ground);
+        let collisonA = SAT.collides(player.body, ground || platforms);
         if (collisonA.collided) {
             player.Grounded = true
         } else 
@@ -135,6 +138,7 @@ let sketch = function (p: p5) {
         //testing if the player is grounded
         console.log(player.Grounded)
 
+        //testing the players positiona
         console.log(player.body.position)
 
 
