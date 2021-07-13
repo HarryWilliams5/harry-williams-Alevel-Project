@@ -8,11 +8,11 @@ class Platforms {
     body: Body;
     colour: String;
 
-    constructor(s: p5, engine: Engine, positionx: number, colour: string) {
+    constructor(s: p5, engine: Engine, positionx: number, positiony: number, colour: string) {
         this.s = s;
         this.colour = colour
         
-        this.body = Bodies.rectangle(positionx, 700, 350, 50, { isStatic: true});
+        this.body = Bodies.rectangle(positionx, positiony, 350, 10, { isStatic: true});
 
         World.add(engine.world, [this.body]);
     }

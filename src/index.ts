@@ -33,7 +33,7 @@ let sketch = function (p: p5) {
         wallR = Bodies.rectangle(145000, 100, 50, 1500, { isStatic: true});
         ceiling = Bodies.rectangle(725, -25, 1450, 50, { isStatic: true})
 
-        player = new Player(p, engine);
+        player = new Player(p, engine, 80);
 
         obstacles = [];
         for (let i = 0; i < 5; i++) {
@@ -46,13 +46,15 @@ let sketch = function (p: p5) {
         engine.world.gravity.y = 2;
 
         //changeable friction
-        player.body.friction = 0.01
+        player.body.friction = 0
         ground.friction = 0.01
+        
     
         cnv = p.createCanvas(1425, 800);
 
         platforms = []  
-        platforms.push(new Platforms(p, engine, 500, 'red'));
+        platforms.push(new Platforms(p, engine, 500, 600, 'red'));
+        platforms.push(new Platforms(p, engine, 200, 700, 'red'));
 
 
     };
@@ -130,7 +132,7 @@ let sketch = function (p: p5) {
         p.endShape(p.CLOSE)
 
         //check if the player is grounded
-        let collisonA = SAT.collides(player.body, ground || platforms);
+        let collisonA = SAT.collides(player.body, (ground || wallL));
         if (collisonA.collided) {
             player.Grounded = true
         } else 
