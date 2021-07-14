@@ -31,7 +31,7 @@ let sketch = function (p: p5) {
         wallR = Bodies.rectangle(145000, 100, 50, 1500, { isStatic: true});
         ceiling = Bodies.rectangle(725, -25, 1450, 50, { isStatic: true})
 
-        player = new Player(p, engine, 80);
+        player = new Player(p, engine, -150, 550, 40, 80);
 
         obstacles = [];
         for (let i = 0; i < 5; i++) {
@@ -128,13 +128,33 @@ let sketch = function (p: p5) {
                 player.Grounded = true
         }})
 
+        //check if the player is touching spikes
+        player.Spiked = false
+        obstacles.forEach(o=> {
+            let collisonA = SAT.collides(player.body, o.body);
+            if (collisonA.collided) {
+                player.Spiked = true
+        }})
+
+        
+
+        //if (player.Grounded = true && this.keyIsDown(83)) {
+            //player.update; this.height; 40;
+        //} else player.update; this.height; 80;
+            
+
+        //if (player.Grounded = true && this.keyIsDown(83)) {
+           //player = new Player (p, engine, 40, 80); 
+        //} else player = new Player (p, engine, 40, 80);
+
+        //testing of the player is spiked
+        console.log(player.Spiked)
+
         //testing if the player is grounded
         console.log(player.Grounded)
 
         //testing the players positiona
         console.log(player.body.position)
-
-
 
     };
 };
