@@ -6,13 +6,13 @@ import Player from './player';
 class Platforms {
     s: p5;
     body: Body;
-    colour: String;
+    colour: string;
 
-    constructor(s: p5, engine: Engine, positionx: number, positiony: number, colour: string) {
+    constructor(s: p5, engine: Engine,  positionx: number, positiony: number, width: number, height: number, colour: string) {
         this.s = s;
         this.colour = colour
         
-        this.body = Bodies.rectangle(positionx, positiony, 350, 10, { isStatic: true});
+        this.body = Bodies.rectangle(positionx, positiony, width, height, { isStatic: true});
 
         World.add(engine.world, [this.body]);
     }
@@ -23,7 +23,7 @@ class Platforms {
 
     draw() {
          
-        this.s.fill ('white')
+        this.s.fill (this.colour)
 
         this.s.beginShape()
         this.body.vertices.forEach(vertex => {

@@ -25,7 +25,7 @@ class Obstacle {
 
     draw() {
          
-        this.s.fill ('grey')
+        this.s.fill (this.colour)
 
         this.s.beginShape()
         this.body.vertices.forEach(vertex => {

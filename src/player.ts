@@ -5,7 +5,7 @@ import { World, Bodies, Engine, Body } from 'matter-js';
 class Player {
     s: p5;
     body: Body;
-    Grounded
+    Grounded: boolean;
 
     constructor(s: p5, engine: Engine, heighty: number) {
         this.s = s;

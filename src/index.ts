@@ -16,7 +16,6 @@ var Engine = Matter.Engine,
 
 let sketch = function (p: p5) {
     let engine: Matter.Engine;
-    var ground: Matter.Body;
     let player: Player;
     let obstacles: Obstacle[];
     let platforms: Platforms[];
@@ -28,7 +27,6 @@ let sketch = function (p: p5) {
     p.setup = function () {
        
         engine = Engine.create();
-        ground = Bodies.rectangle(4812.5, 4760, 10000, 8000, { isStatic: true });
         wallL = Bodies.rectangle(-213, 100, 50, 1500, { isStatic: true});
         wallR = Bodies.rectangle(145000, 100, 50, 1500, { isStatic: true});
         ceiling = Bodies.rectangle(725, -25, 1450, 50, { isStatic: true})
@@ -37,24 +35,24 @@ let sketch = function (p: p5) {
 
         obstacles = [];
         for (let i = 0; i < 5; i++) {
-            obstacles.push(new Obstacle(p, engine, 860+(i*35), 'red'));
+            obstacles.push(new Obstacle(p, engine, 860+(i*35), 'grey'));
         }
 
-        World.add(engine.world, [ground, wallL, wallR, ceiling]);
+        World.add(engine.world, [ wallL, wallR, ceiling]);
          
         //changeable gravity
         engine.world.gravity.y = 2;
 
         //changeable friction
-        player.body.friction = 0
-        ground.friction = 0.01
+        player.body.friction = 0.01
         
     
         cnv = p.createCanvas(1425, 800);
 
         platforms = []  
-        platforms.push(new Platforms(p, engine, 500, 600, 'red'));
-        platforms.push(new Platforms(p, engine, 200, 700, 'red'));
+        platforms.push(new Platforms(p, engine, 4812.5, 4760, 10000, 8000, 'white'));
+        platforms.push(new Platforms(p, engine, 500, 600, 350, 10, 'white'));
+        platforms.push(new Platforms(p, engine, 200, 700, 150, 10, 'white'));
 
 
     };
@@ -113,15 +111,6 @@ let sketch = function (p: p5) {
         })
         p.endShape(p.CLOSE);
 
-        // Draw ground
-        p.fill('white');
-
-        p.beginShape()
-        ground.vertices.forEach(vertex => {
-            p.vertex(vertex.x, vertex.y);
-        })
-        p.endShape(p.CLOSE);
-
         // Draw Ceiling
         p.fill('white')
 
@@ -132,11 +121,13 @@ let sketch = function (p: p5) {
         p.endShape(p.CLOSE)
 
         //check if the player is grounded
-        let collisonA = SAT.collides(player.body, ground);
-        if (collisonA.collided) {
-            player.Grounded = true
-        } else 
         player.Grounded = false
+        platforms.forEach(p=> {
+            let collisonA = SAT.collides(player.body, p.body);
+            if (collisonA.collided) {
+                player.Grounded = true
+        }})
+
         //testing if the player is grounded
         console.log(player.Grounded)
 
