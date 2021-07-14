@@ -28,7 +28,7 @@ let sketch = function (p: p5) {
     p.setup = function () {
        
         engine = Engine.create();
-        ground = Bodies.rectangle(712.5, 4760, 1800, 8000, { isStatic: true });
+        ground = Bodies.rectangle(4812.5, 4760, 10000, 8000, { isStatic: true });
         wallL = Bodies.rectangle(-213, 100, 50, 1500, { isStatic: true});
         wallR = Bodies.rectangle(145000, 100, 50, 1500, { isStatic: true});
         ceiling = Bodies.rectangle(725, -25, 1450, 50, { isStatic: true})
@@ -132,7 +132,7 @@ let sketch = function (p: p5) {
         p.endShape(p.CLOSE)
 
         //check if the player is grounded
-        let collisonA = SAT.collides(player.body, (ground || wallL));
+        let collisonA = SAT.collides(player.body, ground);
         if (collisonA.collided) {
             player.Grounded = true
         } else 

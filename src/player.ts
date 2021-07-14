@@ -9,7 +9,7 @@ class Player {
 
     constructor(s: p5, engine: Engine, heighty: number) {
         this.s = s;
-        this.body = Bodies.rectangle(0, 550, 40, heighty);
+        this.body = Bodies.rectangle(-150, 550, 40, heighty);
         //makes the player stay upright
         Body.setInertia(this.body, Infinity);
         this.Grounded = true
@@ -33,6 +33,7 @@ class Player {
             Body.applyForce(this.body, this.body.position, { x: 0, y: +0.1})
         }
         //if (this.s.keyIsDown(83) && this.Grounded == true)
+            
             
     }
 
