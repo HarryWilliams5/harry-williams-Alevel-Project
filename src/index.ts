@@ -8,6 +8,8 @@ import Obstacle from "./obstacle";
 
 import Platforms from "./platforms";
 
+import Walls from "./walls";
+
 var Engine = Matter.Engine,
     World = Matter.World,
     Bodies = Matter.Bodies;
@@ -19,6 +21,7 @@ let sketch = function (p: p5) {
     let player: Player;
     let obstacles: Obstacle[];
     let platforms: Platforms[];
+    let walls: Walls[]
     var wallL: Matter.Body;
     var wallR: Matter.Body;
     var ceiling: Matter.Body;
@@ -29,16 +32,17 @@ let sketch = function (p: p5) {
         engine = Engine.create();
         wallL = Bodies.rectangle(-213, 100, 50, 1500, { isStatic: true});
         wallR = Bodies.rectangle(145000, 100, 50, 1500, { isStatic: true});
-        ceiling = Bodies.rectangle(725, -25, 1450, 50, { isStatic: true})
+        ceiling = Bodies.rectangle(4812.5, -500, 10000, 100, { isStatic: true})
 
+        
         player = new Player(p, engine, -150, 550, 40, 80);
 
         obstacles = [];
         for (let i = 0; i < 5; i++) {
-            obstacles.push(new Obstacle(p, engine, 860+(i*35), 'grey'));
+            obstacles.push(new Obstacle(p, engine, 300+(i*35), 'grey'));
         }
 
-        World.add(engine.world, [ wallL, wallR, ceiling]);
+        World.add(engine.world, [wallL, wallR, ceiling]);
          
         //changeable gravity
         engine.world.gravity.y = 2;
@@ -50,10 +54,13 @@ let sketch = function (p: p5) {
         cnv = p.createCanvas(1425, 800);
 
         platforms = []  
-        platforms.push(new Platforms(p, engine, 4812.5, 4760, 10000, 8000, 'white'));
-        platforms.push(new Platforms(p, engine, 500, 600, 350, 10, 'white'));
-        platforms.push(new Platforms(p, engine, 200, 700, 150, 10, 'white'));
+        platforms.push(new Platforms(p, engine, 4812.5, 4760, 10000, 8000, '0,0,20'));
+        platforms.push(new Platforms(p, engine, 1500, 600, 350, 10, 'white'));
+        platforms.push(new Platforms(p, engine, 1200, 650, 500, 10, 'white'));
 
+        
+        walls = []
+        walls.push(new Walls(p, engine, 100, 100, 100, 100, 'white'));
 
     };
     
@@ -70,15 +77,19 @@ let sketch = function (p: p5) {
             
         }
 
-        // caps the max velocity at 10 in the left direction
+        // // caps the max velocity at 10 in the left direction
         if (player.body.velocity.x <= -10) {
             Matter.Body.setVelocity(player.body, {
                 x: -9,
                 y: player.body.velocity.y,
             });
         }
-        // Sidescrolling
+        
+        // Sidescrolling x direction
         p.translate(-player.body.position.x + p.width / 2, 0)
+        // Sidescrolling y direction
+        p.translate(0, -player.body.position.y + p.height / 2 + 110)
+       
 
         p.background(0, 0, 20);
 
@@ -136,28 +147,18 @@ let sketch = function (p: p5) {
                 player.Spiked = true
         }})
 
-        
-
-        //if (player.Grounded = true && this.keyIsDown(83)) {
-            //player.update; this.height; 40;
-        //} else player.update; this.height; 80;
-            
-
-        //if (player.Grounded = true && this.keyIsDown(83)) {
-           //player = new Player (p, engine, 40, 80); 
-        //} else player = new Player (p, engine, 40, 80);
-
         //testing of the player is spiked
         console.log(player.Spiked)
 
-        //testing if the player is grounded
+        // testing if the player is grounded
         console.log(player.Grounded)
 
-        //testing the players positiona
+        // testing the players position
         console.log(player.body.position)
 
+      
     };
-};
+  }
 
 
 let myp5 = new p5(sketch);

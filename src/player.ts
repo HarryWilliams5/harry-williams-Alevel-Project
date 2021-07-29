@@ -36,8 +36,8 @@ class Player {
             Body.applyForce(this.body, this.body.position, { x: 0, y: +0.1})
         }
         if (this.Spiked == true){
-            Body.setPosition(this.body, {x: -150, y: 700});
-        }
+          Body.setPosition(this.body, {x: -150, y: 700});
+         }
             
             
     }
