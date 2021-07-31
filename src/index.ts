@@ -16,6 +16,7 @@ import Platforms from "./platforms";
 
 import Walls from "./walls";
 
+import Sword from './sword';
 
 var Engine = Matter.Engine,
     World = Matter.World,
@@ -36,6 +37,7 @@ let sketch = function (p: p5) {
     var wallR: Matter.Body;
     var ceiling: Matter.Body;
     var cnv: p5.Renderer;
+    var sword: Sword[];
 
     p.setup = function () {
        
@@ -96,11 +98,15 @@ let sketch = function (p: p5) {
         flagpole = []
         flagpole.push(new Flagpole(p, engine, 4500, 560, 'gold'))
 
+                  
     };
     
 
     p.draw = function () {
         Engine.update(engine, p.deltaTime);
+
+        sword = []
+        sword.push(new Sword(p, engine, player.body.position.x + 50, player.body.position.y, "silver"))
 
         //caps the max velocity at 10 in the right diection
         if (player.body.velocity.x >= 10) {
@@ -161,6 +167,9 @@ let sketch = function (p: p5) {
         // Drawing the flagpoles
         player.draw();
         flagpole.forEach(f => f.draw());
+
+        player.draw();
+        sword.forEach(sw => sw.draw());
 
         // Draw boarders
         p.fill(0, 0, 20);

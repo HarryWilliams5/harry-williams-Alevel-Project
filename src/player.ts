@@ -50,6 +50,10 @@ class Player {
         if (this.Flagged == true){
             Body.setPosition(this.body, {x: this.body.position.x + 500, y: 700 })
         }
+        if (this.s.keyIsDown(81)){
+            this.draw()
+             Bodies.polygon(this.body.position.x, this.body.position.y, 3, 100)
+        }
         
             
             
