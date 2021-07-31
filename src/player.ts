@@ -7,6 +7,7 @@ class Player {
     body: Body;
     Grounded: boolean;
     Spiked: boolean;
+    Spiked1: boolean;
 
     constructor(s: p5, engine: Engine, posx: number, posy: number, width: number, height: number) {
         this.s = s;
@@ -16,6 +17,7 @@ class Player {
         Body.setInertia(this.body, Infinity);
         this.Grounded = true
         this.Spiked = false
+        this.Spiked1 = false
 
         World.add(engine.world, [this.body]);
     }
@@ -36,8 +38,11 @@ class Player {
             Body.applyForce(this.body, this.body.position, { x: 0, y: +0.1})
         }
         if (this.Spiked == true){
-          Body.setPosition(this.body, {x: -150, y: 700});
-         }
+            Body.setPosition(this.body, {x: -150, y: 700});
+        }
+        if (this.Spiked1 == true){
+            Body.setPosition(this.body, {x: -150, y: 700});
+        }
             
             
     }

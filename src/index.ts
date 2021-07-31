@@ -6,9 +6,12 @@ import Player from "./player";
 
 import Obstacle from "./obstacle";
 
+import Obstacle2 from "./obstacle2";
+
 import Platforms from "./platforms";
 
 import Walls from "./walls";
+
 
 var Engine = Matter.Engine,
     World = Matter.World,
@@ -20,6 +23,7 @@ let sketch = function (p: p5) {
     let engine: Matter.Engine;
     let player: Player;
     let obstacles: Obstacle[];
+    let obstacles2: Obstacle2[];
     let platforms: Platforms[];
     let walls: Walls[]
     var wallL: Matter.Body;
@@ -35,21 +39,23 @@ let sketch = function (p: p5) {
         ceiling = Bodies.rectangle(4812.5, -500, 10000, 100, { isStatic: true})
 
         
-        player = new Player(p, engine, 3000, 550, 40, 80);
+        player = new Player(p, engine, -100, 550, 40, 80);
 
         obstacles = [];
         for (let i = 0; i < 5; i++) {
             obstacles.push(new Obstacle(p, engine, 400+(i*35), 750,'grey'));
         }
-        for (let i = 0; i < 2; i++) {
-            obstacles.push(new Obstacle(p, engine, 1197+(i*35), 750, 'grey'));
+        for (let i = 0; i < 5; i++) {
+            obstacles.push(new Obstacle(p, engine, 1100+(i*35), 750, 'grey'));
         }
         for (let i = 0; i < 20; i++) {
             obstacles.push(new Obstacle(p, engine, 2100+(i*35), 750, 'grey'));
         }
+
+        obstacles2 = [];
         //verical spikes
         for (let i = 0; i < 19; i++) {
-            obstacles.push(new Obstacle(p, engine, 3185, 560-(i * 30), 'grey'));
+            obstacles2.push(new Obstacle2(p, engine, 3185, 560-(i * 30), 'grey'));
         }
 
         World.add(engine.world, [wallL, wallR, ceiling]);
@@ -123,9 +129,14 @@ let sketch = function (p: p5) {
         var posChange = player.update();
         obstacles.forEach(o => o.update());
 
-        // Handle drawing of game objects
+        // Handle drawing of the spikes
         player.draw();
         obstacles.forEach(o => o.draw());
+
+        // Handle drawing of spikes
+        player.draw();
+        obstacles2.forEach(o2 => o2.draw());
+
 
         // Handle drawing of platforms
         player.draw();
@@ -176,6 +187,15 @@ let sketch = function (p: p5) {
             if (collisonA.collided) {
                 player.Spiked = true
         }})
+
+        //check if the player is touching spikes
+        player.Spiked1 = false
+        obstacles2.forEach(o2=> {
+            let collisonA = SAT.collides(player.body, o2.body);
+            if (collisonA.collided) {
+                player.Spiked1 = true
+        }})
+
 
         //testing of the player is spiked
         console.log(player.Spiked)
