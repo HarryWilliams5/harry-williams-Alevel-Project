@@ -39,15 +39,18 @@ class Player {
         if (this.s.keyIsDown(83)) {
             Body.applyForce(this.body, this.body.position, { x: 0, y: +0.1})
         }
+        // sends the player back to the start if they touch a spike
         if (this.Spiked == true){
             Body.setPosition(this.body, {x: -150, y: 700});
         }
         if (this.Spiked1 == true){
             Body.setPosition(this.body, {x: -150, y: 700});
         }
+        // moves the player to the next level when they touch the flag
         if (this.Flagged == true){
             Body.setPosition(this.body, {x: this.body.position.x + 500, y: 700 })
         }
+        
             
             
     }

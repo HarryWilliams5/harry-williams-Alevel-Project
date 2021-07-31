@@ -31,7 +31,7 @@ let sketch = function (p: p5) {
     let obstacles3: Obstacle3[];
     let flagpole: Flagpole[];
     let platforms: Platforms[];
-    let walls: Walls[]
+    let walls: Walls[];
     var wallL: Matter.Body;
     var wallR: Matter.Body;
     var ceiling: Matter.Body;
@@ -45,7 +45,7 @@ let sketch = function (p: p5) {
         ceiling = Bodies.rectangle(4812.5, -500, 10000, 100, { isStatic: true})
 
         
-        player = new Player(p, engine, 4000, 550, 40, 80);
+        player = new Player(p, engine, -100, 550, 40, 80);
 
         obstacles = [];
         for (let i = 0; i < 5; i++) {
