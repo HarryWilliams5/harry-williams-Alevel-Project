@@ -8,6 +8,10 @@ import Obstacle from "./obstacle";
 
 import Obstacle2 from "./obstacle2";
 
+import Obstacle3 from "./obstacle3";
+
+import Flagpole from  './flagpole';
+
 import Platforms from "./platforms";
 
 import Walls from "./walls";
@@ -24,6 +28,8 @@ let sketch = function (p: p5) {
     let player: Player;
     let obstacles: Obstacle[];
     let obstacles2: Obstacle2[];
+    let obstacles3: Obstacle3[];
+    let flagpole: Flagpole[];
     let platforms: Platforms[];
     let walls: Walls[]
     var wallL: Matter.Body;
@@ -39,7 +45,7 @@ let sketch = function (p: p5) {
         ceiling = Bodies.rectangle(4812.5, -500, 10000, 100, { isStatic: true})
 
         
-        player = new Player(p, engine, -100, 550, 40, 80);
+        player = new Player(p, engine, 4000, 550, 40, 80);
 
         obstacles = [];
         for (let i = 0; i < 5; i++) {
@@ -77,12 +83,18 @@ let sketch = function (p: p5) {
         platforms.push(new Platforms(p, engine, 3000, 700, 400, 10, '#000033', 'white'));
         platforms.push(new Platforms(p, engine, 3180, 636, 40, 120, '#000033', 'white'));
         platforms.push(new Platforms(p, engine, 3400, 0, 400, 10, '#000033', 'white'));
-
+        platforms.push(new Platforms(p, engine, 3600, 378, 10, 765, '#000033', 'white'));
+        
         
         walls = []
-        walls.push(new Walls(p, engine, 2000, -75, 10, 1000, 'white'))
-        walls.push(new Walls(p, engine, 2800, -75, 10, 1000, 'white'))
-        walls.push(new Walls(p, engine, 3200, 378, 10, 765, 'white'))
+        walls.push(new Walls(p, engine, 2000, -75, 10, 1000, 'white'));
+        walls.push(new Walls(p, engine, 2800, -75, 10, 1000, 'white'));
+        walls.push(new Walls(p, engine, 3200, 378, 10, 765, 'white'));
+        walls.push(new Walls(p, engine, 4000, 328, 10, 650, 'white'));
+        walls.push(new Walls(p, engine, 3800, 500, 400, 10, 'white'));
+
+        flagpole = []
+        flagpole.push(new Flagpole(p, engine, 4500, 560, 'gold'))
 
     };
     
@@ -146,6 +158,10 @@ let sketch = function (p: p5) {
         player.draw();
         walls.forEach(w => w.draw());
 
+        // Drawing the flagpoles
+        player.draw();
+        flagpole.forEach(f => f.draw());
+
         // Draw boarders
         p.fill(0, 0, 20);
         
@@ -195,6 +211,16 @@ let sketch = function (p: p5) {
             if (collisonA.collided) {
                 player.Spiked1 = true
         }})
+
+        // Check of the player is flagged
+        player.Flagged = false
+        flagpole.forEach(f => {
+            let collisionA = SAT.collides(player.body, f.body);
+            if (collisionA.collided) {
+                player.Flagged = true
+            }
+        }
+        )
 
 
         //testing of the player is spiked
