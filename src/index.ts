@@ -106,8 +106,10 @@ let sketch = function (p: p5) {
         Engine.update(engine, p.deltaTime);
 
         sword = []
-        sword.push(new Sword(p, engine, player.body.position.x + 50, player.body.position.y, "silver"))
-
+        if (this.keyIsDown(81)){
+            sword.push(new Sword(p, engine, player.body.position.x + 50, player.body.position.y , "silver"))     
+        }
+        
         //caps the max velocity at 10 in the right diection
         if (player.body.velocity.x >= 10) {
             Matter.Body.setVelocity(player.body, {
