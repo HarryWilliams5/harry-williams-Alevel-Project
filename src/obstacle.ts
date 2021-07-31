@@ -9,11 +9,11 @@ class Obstacle {
     colour: string;
     
   
-    constructor(s: p5, engine: Engine, positionx: number, colour: string) {
+    constructor(s: p5, engine: Engine, positionx: number, positiony: number, colour: string) {
         this.s = s;
         this.colour = colour
         
-        this.body = Bodies.polygon(positionx, 750, 3, 20, { isStatic: true});
+        this.body = Bodies.polygon(positionx, positiony, 3, 20, { isStatic: true});
         Body.rotate(this.body, Math.PI/2)
 
         World.add(engine.world, [this.body]);

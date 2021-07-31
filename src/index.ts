@@ -35,11 +35,21 @@ let sketch = function (p: p5) {
         ceiling = Bodies.rectangle(4812.5, -500, 10000, 100, { isStatic: true})
 
         
-        player = new Player(p, engine, -150, 550, 40, 80);
+        player = new Player(p, engine, 3000, 550, 40, 80);
 
         obstacles = [];
         for (let i = 0; i < 5; i++) {
-            obstacles.push(new Obstacle(p, engine, 300+(i*35), 'grey'));
+            obstacles.push(new Obstacle(p, engine, 400+(i*35), 750,'grey'));
+        }
+        for (let i = 0; i < 2; i++) {
+            obstacles.push(new Obstacle(p, engine, 1197+(i*35), 750, 'grey'));
+        }
+        for (let i = 0; i < 20; i++) {
+            obstacles.push(new Obstacle(p, engine, 2100+(i*35), 750, 'grey'));
+        }
+        //verical spikes
+        for (let i = 0; i < 19; i++) {
+            obstacles.push(new Obstacle(p, engine, 3185, 560-(i * 30), 'grey'));
         }
 
         World.add(engine.world, [wallL, wallR, ceiling]);
@@ -54,13 +64,19 @@ let sketch = function (p: p5) {
         cnv = p.createCanvas(1425, 800);
 
         platforms = []  
-        platforms.push(new Platforms(p, engine, 4812.5, 4760, 10000, 8000, '0,0,20'));
-        platforms.push(new Platforms(p, engine, 1500, 600, 350, 10, 'white'));
-        platforms.push(new Platforms(p, engine, 1200, 650, 500, 10, 'white'));
+        platforms.push(new Platforms(p, engine, 4812.5, 4760, 10000, 8000, 'white', 'white'));
+        platforms.push(new Platforms(p, engine, 1850, 600, 350, 10, '#000033', 'white'));
+        platforms.push(new Platforms(p, engine, 1450, 700, 350, 10, '#000033', 'white'));
+        platforms.push(new Platforms(p, engine, 2400, 425, 800, 10, '#000033', 'white'));
+        platforms.push(new Platforms(p, engine, 3000, 700, 400, 10, '#000033', 'white'));
+        platforms.push(new Platforms(p, engine, 3180, 636, 40, 120, '#000033', 'white'));
+        platforms.push(new Platforms(p, engine, 3400, 0, 400, 10, '#000033', 'white'));
 
         
         walls = []
-        walls.push(new Walls(p, engine, 100, 100, 100, 100, 'white'));
+        walls.push(new Walls(p, engine, 2000, -75, 10, 1000, 'white'))
+        walls.push(new Walls(p, engine, 2800, -75, 10, 1000, 'white'))
+        walls.push(new Walls(p, engine, 3200, 378, 10, 765, 'white'))
 
     };
     
@@ -77,18 +93,28 @@ let sketch = function (p: p5) {
             
         }
 
-        // // caps the max velocity at 10 in the left direction
+        // caps the max velocity at 10 in the left direction
         if (player.body.velocity.x <= -10) {
             Matter.Body.setVelocity(player.body, {
                 x: -9,
                 y: player.body.velocity.y,
             });
         }
+
+        // caps the max velocity at 30 in the y direction
+        if (player.body.velocity.y <= -30) {
+            Matter.Body.setVelocity(player.body, {
+                x: player.body.velocity.x,
+                y: -29,
+            });
+        }
+
+
         
         // Sidescrolling x direction
         p.translate(-player.body.position.x + p.width / 2, 0)
         // Sidescrolling y direction
-        p.translate(0, -player.body.position.y + p.height / 2 + 110)
+        p.translate(0, -player.body.position.y + p.height / 2 + 0)
        
 
         p.background(0, 0, 20);
@@ -104,6 +130,10 @@ let sketch = function (p: p5) {
         // Handle drawing of platforms
         player.draw();
         platforms.forEach(z => z.draw());
+
+        // Handles the drawing of walls
+        player.draw();
+        walls.forEach(w => w.draw());
 
         // Draw boarders
         p.fill(0, 0, 20);
