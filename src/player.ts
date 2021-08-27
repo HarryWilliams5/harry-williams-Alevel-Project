@@ -28,7 +28,7 @@ class Player {
     update() {
         // WASD keys move the player
         if (this.s.keyIsDown(87) && this.Grounded == true) {
-            Body.applyForce(this.body, this.body.position, { x: 0, y: -0.075 });
+            Body.applyForce(this.body, this.body.position, { x: 0, y: -0.095});
         } 
         if (this.s.keyIsDown(65)) {
             Body.applyForce(this.body, this.body.position, { x: -0.005, y: 0 });
@@ -43,20 +43,12 @@ class Player {
         if (this.Spiked == true){
             Body.setPosition(this.body, {x: -150, y: 700});
         }
-        if (this.Spiked1 == true){
-            Body.setPosition(this.body, {x: -150, y: 700});
-        }
+        
         // moves the player to the next level when they touch the flag
         if (this.Flagged == true){
             Body.setPosition(this.body, {x: this.body.position.x + 500, y: 700 })
         }
-        if (this.s.keyIsDown(81)){
-            this.draw()
-             Bodies.polygon(this.body.position.x, this.body.position.y, 3, 100)
-        }
         
-            
-            
     }
 
     draw() {

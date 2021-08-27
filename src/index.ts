@@ -4,11 +4,11 @@ import * as Matter from 'matter-js';
 
 import Player from "./player";
 
-import Obstacle from "./obstacle";
+import Obstacle from "./Obstacles/obstacle";
 
-import Obstacle2 from "./obstacle2";
+import Obstacle2 from "./Obstacles/obstacle2";
 
-import Obstacle3 from "./obstacle3";
+import Obstacle3 from "./Obstacles/obstacle3";
 
 import Flagpole from  './flagpole';
 
@@ -17,6 +17,8 @@ import Platforms from "./platforms";
 import Walls from "./walls";
 
 import Sword from './sword';
+
+import Enemy from './Enemies/Enemies';
 
 var Engine = Matter.Engine,
     World = Matter.World,
@@ -37,7 +39,8 @@ let sketch = function (p: p5) {
     var wallR: Matter.Body;
     var ceiling: Matter.Body;
     var cnv: p5.Renderer;
-    var sword: Sword[];
+    let sword: Sword[];
+    let Enemies: Enemy[];
 
     p.setup = function () {
        
@@ -47,11 +50,12 @@ let sketch = function (p: p5) {
         ceiling = Bodies.rectangle(4812.5, -500, 10000, 100, { isStatic: true})
 
         
-        player = new Player(p, engine, -100, 550, 40, 80);
+        player = new Player(p, engine, -100, 250, 40, 80);
 
         obstacles = [];
         for (let i = 0; i < 5; i++) {
             obstacles.push(new Obstacle(p, engine, 400+(i*35), 750,'grey'));
+            
         }
         for (let i = 0; i < 5; i++) {
             obstacles.push(new Obstacle(p, engine, 1100+(i*35), 750, 'grey'));
@@ -86,6 +90,7 @@ let sketch = function (p: p5) {
         platforms.push(new Platforms(p, engine, 3180, 636, 40, 120, '#000033', 'white'));
         platforms.push(new Platforms(p, engine, 3400, 0, 400, 10, '#000033', 'white'));
         platforms.push(new Platforms(p, engine, 3600, 378, 10, 765, '#000033', 'white'));
+        platforms.push(new Platforms(p, engine, 3800, 500, 400, 10, '#696969', 'white'));
         
         
         walls = []
@@ -93,10 +98,17 @@ let sketch = function (p: p5) {
         walls.push(new Walls(p, engine, 2800, -75, 10, 1000, 'white'));
         walls.push(new Walls(p, engine, 3200, 378, 10, 765, 'white'));
         walls.push(new Walls(p, engine, 4000, 328, 10, 650, 'white'));
-        walls.push(new Walls(p, engine, 3800, 500, 400, 10, 'white'));
+
+
+        // walls.push(new Walls(p, engine, 100, 250, 100, 10, 'white'));
 
         flagpole = []
         flagpole.push(new Flagpole(p, engine, 4500, 560, 'gold'))
+
+
+        Enemies = []
+        Enemies.push(new Enemy(p, engine, 300, 500, 'red'))
+       
 
                   
     };
@@ -107,7 +119,7 @@ let sketch = function (p: p5) {
 
         sword = []
         if (this.keyIsDown(81)){
-            sword.push(new Sword(p, engine, player.body.position.x + 50, player.body.position.y , "silver"))     
+            sword.push(new Sword(p, engine, player.body.position.x + 50, player.body.position.y , "silver")) 
         }
         
         //caps the max velocity at 10 in the right diection
@@ -145,15 +157,15 @@ let sketch = function (p: p5) {
 
         p.background(0, 0, 20);
 
-        // Handle updates of game objects
-        var posChange = player.update();
-        obstacles.forEach(o => o.update());
+       
+        player.update();
+        Enemies.forEach(e => e.update());
 
-        // Handle drawing of the spikes
+        // Handle drawing of vertical spikes
         player.draw();
         obstacles.forEach(o => o.draw());
 
-        // Handle drawing of spikes
+        // Handle drawing of horizontal spikes
         player.draw();
         obstacles2.forEach(o2 => o2.draw());
 
@@ -172,6 +184,9 @@ let sketch = function (p: p5) {
 
         player.draw();
         sword.forEach(sw => sw.draw());
+
+        player.draw();
+        Enemies.forEach(e => e.draw());
 
         // Draw boarders
         p.fill(0, 0, 20);

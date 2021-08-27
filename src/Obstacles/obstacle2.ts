@@ -1,7 +1,7 @@
 import * as p5 from 'p5';
 
 import { Body, Bodies, Engine, World } from 'matter-js';
-import Player from './player';
+import Player from '../player';
 
 class Obstacle2 {
     s: p5;

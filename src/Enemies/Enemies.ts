@@ -1,9 +1,9 @@
 import * as p5 from 'p5';
 
 import { Body, Bodies, Engine, World } from 'matter-js';
-import Player from './player';
+import Player from '../player';
 
-class Obstacle3 {
+class Enemy {
     s: p5;
     body: Body;
     colour: string;
@@ -13,14 +13,23 @@ class Obstacle3 {
         this.s = s;
         this.colour = colour
         
-        this.body = Bodies.polygon(positionx, positiony, 3, 20, { isStatic: true});
-        Body.rotate(this.body, Math.PI/3)
+        
+        this.body = Bodies.rectangle(positionx, positiony, 50, 50);
+        Body.setInertia(this.body, Infinity);
         
 
         World.add(engine.world, [this.body]);
     }
 
     update() {
+
+        if (this.body.position.y > 650){
+            Body.applyForce(this.body, this.body.position, {x : 0, y : -0.2});
+        }
+        if (this.body.position.y < 450){
+            Body.applyForce(this.body, this.body.position, {x : 0, y : 0.2})
+        }
+         
 
     }
 
@@ -36,4 +45,4 @@ class Obstacle3 {
     }
 }
 
-export default Obstacle3
+export default Enemy;

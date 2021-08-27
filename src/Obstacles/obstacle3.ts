@@ -1,9 +1,9 @@
 import * as p5 from 'p5';
 
 import { Body, Bodies, Engine, World } from 'matter-js';
-import Player from './player';
+import Player from '../player';
 
-class Sword {
+class Obstacle3 {
     s: p5;
     body: Body;
     colour: string;
@@ -13,16 +13,15 @@ class Sword {
         this.s = s;
         this.colour = colour
         
-        this.body = Bodies.polygon(positionx, positiony, 3, 50, { isStatic: true});
+        this.body = Bodies.polygon(positionx, positiony, 3, 20, { isStatic: true});
         Body.rotate(this.body, Math.PI/3)
+        
 
         World.add(engine.world, [this.body]);
     }
 
     update() {
-        if (this.s.keyIsDown(81)){
 
-        }
     }
 
     draw() {
@@ -37,4 +36,4 @@ class Sword {
     }
 }
 
-export default Sword;
+export default Obstacle3
