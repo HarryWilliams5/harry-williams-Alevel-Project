@@ -8,6 +8,7 @@ class Player {
     Grounded: boolean;
     Spiked: boolean;
     Spiked1: boolean;
+    Spiked2: boolean;
     Flagged: boolean;
 
     constructor(s: p5, engine: Engine, posx: number, posy: number, width: number, height: number) {
@@ -19,6 +20,7 @@ class Player {
         this.Grounded = true
         this.Spiked = false
         this.Spiked1 = false
+        this.Spiked2 = false
         this.Flagged = false
 
         World.add(engine.world, [this.body]);
@@ -39,8 +41,14 @@ class Player {
         if (this.s.keyIsDown(83)) {
             Body.applyForce(this.body, this.body.position, { x: 0, y: +0.1})
         }
-        // sends the player back to the start if they touch a spike
+        // sends the player back to the start if they touch a spike or enemy
         if (this.Spiked == true){
+            Body.setPosition(this.body, {x: -150, y: 700});
+        }
+        if (this.Spiked1 == true){
+            Body.setPosition(this.body, {x: -150, y: 700});
+        }
+        if (this.Spiked2 == true){
             Body.setPosition(this.body, {x: -150, y: 700});
         }
         

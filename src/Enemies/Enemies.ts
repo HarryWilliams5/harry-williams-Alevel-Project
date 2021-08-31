@@ -23,15 +23,10 @@ class Enemy {
 
     update() {
 
-        if (this.body.position.y > 650){
-            Body.applyForce(this.body, this.body.position, {x : 0, y : -0.2});
+        if (this.body.position.y > 700){
+            Body.setVelocity (this.body, {x : 0, y : -20})}
         }
-        if (this.body.position.y < 450){
-            Body.applyForce(this.body, this.body.position, {x : 0, y : 0.2})
-        }
-         
 
-    }
 
     draw() {
          

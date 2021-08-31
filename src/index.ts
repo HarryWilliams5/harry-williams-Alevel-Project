@@ -76,7 +76,7 @@ let sketch = function (p: p5) {
         engine.world.gravity.y = 2;
 
         //changeable friction
-        player.body.friction = 0.01
+        player.body.friction = 0.0075
         
     
         cnv = p.createCanvas(1425, 800);
@@ -108,6 +108,7 @@ let sketch = function (p: p5) {
 
         Enemies = []
         Enemies.push(new Enemy(p, engine, 300, 500, 'red'))
+        Enemies.push(new Enemy(p, engine, 900, 500, 'red'))
        
 
                   
@@ -230,12 +231,20 @@ let sketch = function (p: p5) {
                 player.Spiked = true
         }})
 
+
         //check if the player is touching spikes
         player.Spiked1 = false
         obstacles2.forEach(o2=> {
             let collisonA = SAT.collides(player.body, o2.body);
             if (collisonA.collided) {
                 player.Spiked1 = true
+        }})
+
+        player.Spiked2 = false
+        Enemies.forEach(e=> {
+            let collisonA = SAT.collides(player.body, e.body);
+            if (collisonA.collided) {
+                player.Spiked2 = true
         }})
 
         // Check of the player is flagged
