@@ -11,6 +11,7 @@ class Platforms {
 
     constructor(s: p5, engine: Engine,  positionx: number, positiony: number, width: number, height: number,
      colour: string, stroke: string,) {
+        
         this.s = s;
         this.colour = colour
         this.stroke = colour

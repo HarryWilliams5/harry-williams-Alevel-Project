@@ -20,6 +20,8 @@ import Sword from './sword';
 
 import Enemy from './Enemies/Enemies';
 
+import Boss1 from './Enemies/Boss1'
+
 var Engine = Matter.Engine,
     World = Matter.World,
     Bodies = Matter.Bodies;
@@ -41,16 +43,23 @@ let sketch = function (p: p5) {
     var cnv: p5.Renderer;
     let sword: Sword[];
     let Enemies: Enemy[];
+    let boss1: Boss1;
 
     p.setup = function () {
+
+       
        
         engine = Engine.create();
         wallL = Bodies.rectangle(-213, 100, 50, 1500, { isStatic: true});
         wallR = Bodies.rectangle(145000, 100, 50, 1500, { isStatic: true});
         ceiling = Bodies.rectangle(4812.5, -500, 10000, 100, { isStatic: true})
 
+        //creating the player
+        player = new Player(p, engine, 4800, 250, 40, 80);
+
+        //creating the first boss
+        boss1 = new Boss1(p, engine, 5000, 500);
         
-        player = new Player(p, engine, -100, 250, 40, 80);
 
         obstacles = [];
         for (let i = 0; i < 5; i++) {
@@ -103,12 +112,14 @@ let sketch = function (p: p5) {
         // walls.push(new Walls(p, engine, 100, 250, 100, 10, 'white'));
 
         flagpole = []
-        flagpole.push(new Flagpole(p, engine, 4500, 560, 'gold'))
+        flagpole.push(new Flagpole(p, engine, 6000, 560, 'gold'))
 
 
         Enemies = []
         Enemies.push(new Enemy(p, engine, 300, 500, 'red'))
         Enemies.push(new Enemy(p, engine, 900, 500, 'red'))
+
+        
        
 
                   
@@ -118,11 +129,36 @@ let sketch = function (p: p5) {
     p.draw = function () {
         Engine.update(engine, p.deltaTime);
 
+        p.background(0, 0, 20);
+
+        //pupil of the first boss
+        this.fill('red')
+        this.ellipse(boss1.body.position.x, boss1.body.position.y, 10);
+
+        //setting instruction for boss1
+        if (boss1.body.position.x > player.body.position.x){
+            Matter.Body.applyForce(boss1.body, boss1.body.position, {x : -0.01, y : 0})
+        }
+        if (boss1.body.position.x < player.body.position.x){
+            Matter.Body.applyForce(boss1.body, boss1.body.position, {x : 0.01, y : 0})
+        }
+        if (boss1.body.position.y > player.body.position.y){
+            Matter.Body.applyForce(boss1.body, boss1.body.position, {x : 0, y : -0.1})
+        }
+        if (boss1.body.position.y < player.body.position.y){
+            Matter.Body.applyForce(boss1.body, boss1.body.position, {x : 0, y : 0.01})
+        }
+
+
+
+
+
         sword = []
         if (this.keyIsDown(81)){
             sword.push(new Sword(p, engine, player.body.position.x + 50, player.body.position.y , "silver")) 
         }
-        
+
+
         //caps the max velocity at 10 in the right diection
         if (player.body.velocity.x >= 10) {
             Matter.Body.setVelocity(player.body, {
@@ -154,22 +190,21 @@ let sketch = function (p: p5) {
         p.translate(-player.body.position.x + p.width / 2, 0)
         // Sidescrolling y direction
         p.translate(0, -player.body.position.y + p.height / 2 + 0)
-       
-
-        p.background(0, 0, 20);
+    
 
        
         player.update();
         Enemies.forEach(e => e.update());
 
+        boss1.update();
+
         // Handle drawing of vertical spikes
-        player.draw();
+        boss1.draw();
         obstacles.forEach(o => o.draw());
 
         // Handle drawing of horizontal spikes
         player.draw();
         obstacles2.forEach(o2 => o2.draw());
-
 
         // Handle drawing of platforms
         player.draw();
@@ -183,11 +218,18 @@ let sketch = function (p: p5) {
         player.draw();
         flagpole.forEach(f => f.draw());
 
+        //handles the drawing of the sword
         player.draw();
         sword.forEach(sw => sw.draw());
 
+        //Handles the drawing of enemies
         player.draw();
         Enemies.forEach(e => e.draw());
+
+        // //Handles the drawing of the first boss
+        // player.draw();
+        // boss1.forEach(b1 => b1.draw()); {
+            //};
 
         // Draw boarders
         p.fill(0, 0, 20);
@@ -214,6 +256,14 @@ let sketch = function (p: p5) {
             p.vertex(vertex.x, vertex.y);
         })
         p.endShape(p.CLOSE)
+
+        // p.fill ('white')
+
+        // p.beginShape()
+        // boss1.vertices.forEach(vertex => {
+        //     p.vertex(vertex.x, vertex.y);
+        // })
+        // p.endShape(p.CLOSE);
 
         //check if the player is grounded
         player.Grounded = false
@@ -256,6 +306,8 @@ let sketch = function (p: p5) {
             }
         }
         )
+
+        
 
 
         //testing of the player is spiked

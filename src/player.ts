@@ -30,7 +30,7 @@ class Player {
     update() {
         // WASD keys move the player
         if (this.s.keyIsDown(87) && this.Grounded == true) {
-            Body.applyForce(this.body, this.body.position, { x: 0, y: -0.095});
+            Body.applyForce(this.body, this.body.position, { x: 0, y: -0.3});
         } 
         if (this.s.keyIsDown(65)) {
             Body.applyForce(this.body, this.body.position, { x: -0.005, y: 0 });
