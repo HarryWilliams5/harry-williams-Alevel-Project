@@ -22,6 +22,8 @@ import Enemy from './Enemies/Enemies';
 
 import Boss1 from './Enemies/Boss1'
 
+import JumpPads from './JumpPads';
+
 var Engine = Matter.Engine,
     World = Matter.World,
     Bodies = Matter.Bodies;
@@ -41,24 +43,26 @@ let sketch = function (p: p5) {
     var wallR: Matter.Body;
     var ceiling: Matter.Body;
     var cnv: p5.Renderer;
-    let sword: Sword[];
+    let sword: Sword;
     let Enemies: Enemy[];
     let boss1: Boss1;
+    let jumpPads : JumpPads[];
 
     p.setup = function () {
 
-       
-       
+
         engine = Engine.create();
         wallL = Bodies.rectangle(-213, 100, 50, 1500, { isStatic: true});
         wallR = Bodies.rectangle(145000, 100, 50, 1500, { isStatic: true});
-        ceiling = Bodies.rectangle(4812.5, -500, 10000, 100, { isStatic: true})
+        ceiling = Bodies.rectangle(4812.5, -6000, 10000, 10000, { isStatic: true})
 
         //creating the player
-        player = new Player(p, engine, 4800, 250, 40, 80);
+        player = new Player(p, engine, 4500, 600, 40, 80);
 
         //creating the first boss
-        boss1 = new Boss1(p, engine, 5000, 500);
+        boss1 = new Boss1(p, engine, 6000, -50000, 'red');
+
+        
         
 
         obstacles = [];
@@ -100,26 +104,41 @@ let sketch = function (p: p5) {
         platforms.push(new Platforms(p, engine, 3400, 0, 400, 10, '#000033', 'white'));
         platforms.push(new Platforms(p, engine, 3600, 378, 10, 765, '#000033', 'white'));
         platforms.push(new Platforms(p, engine, 3800, 500, 400, 10, '#696969', 'white'));
+
+        //boss1 arena
+        platforms.push(new Platforms(p, engine, 4750, 300, 700, 10, '#696969', 'white'));
+        platforms.push(new Platforms(p, engine, 6025, 300, 700, 10, '#696969', 'white'));
+        platforms.push(new Platforms(p, engine, 5400, -100, 700, 10, '#696969', 'white'));
+        platforms.push(new Platforms(p, engine, 5400, -700, 2500, 10, '#000033', 'white'));
+
+
         
         
         walls = []
         walls.push(new Walls(p, engine, 2000, -75, 10, 1000, 'white'));
         walls.push(new Walls(p, engine, 2800, -75, 10, 1000, 'white'));
         walls.push(new Walls(p, engine, 3200, 378, 10, 765, 'white'));
-        walls.push(new Walls(p, engine, 4000, 328, 10, 650, 'white'));
+        walls.push(new Walls(p, engine, 4000, -500, 10, 2000, 'white'));
+        
 
 
         // walls.push(new Walls(p, engine, 100, 250, 100, 10, 'white'));
 
         flagpole = []
-        flagpole.push(new Flagpole(p, engine, 6000, 560, 'gold'))
+        flagpole.push(new Flagpole(p, engine, 7000, 560, 'gold'))
 
 
         Enemies = []
         Enemies.push(new Enemy(p, engine, 300, 500, 'red'))
         Enemies.push(new Enemy(p, engine, 900, 500, 'red'))
 
-        
+        jumpPads = []
+        jumpPads.push(new JumpPads(p, engine, 4300, 765, 100, 10, 'cyan'))
+        jumpPads.push(new JumpPads(p, engine, 5400, 765, 100, 10, 'cyan'))
+        jumpPads.push(new JumpPads(p, engine, 4750, 300, 100, 10, 'cyan'))
+        jumpPads.push(new JumpPads(p, engine, 6025, 300, 100, 10, 'cyan'))
+        jumpPads.push(new JumpPads(p, engine, 5400, -100, 100, 10, 'cyan'))
+        jumpPads.push(new JumpPads(p, engine, 6550, 765, 100, 10, 'cyan'))
        
 
                   
@@ -132,31 +151,32 @@ let sketch = function (p: p5) {
         p.background(0, 0, 20);
 
         //pupil of the first boss
-        this.fill('red')
-        this.ellipse(boss1.body.position.x, boss1.body.position.y, 10);
+        
 
-        //setting instruction for boss1
+        //creating the sword
+        if (this.keyIsDown(81)){
+            sword = new Sword(p, engine, player.body.position.x + 100, player.body.position.y, 'grey')
+        }
+        
+        //instructions for boss1
         if (boss1.body.position.x > player.body.position.x){
-            Matter.Body.applyForce(boss1.body, boss1.body.position, {x : -0.01, y : 0})
+            Matter.Body.applyForce(boss1.body, boss1.body.position, {x : -0.0175, y : 0})
         }
         if (boss1.body.position.x < player.body.position.x){
-            Matter.Body.applyForce(boss1.body, boss1.body.position, {x : 0.01, y : 0})
+            Matter.Body.applyForce(boss1.body, boss1.body.position, {x : 0.0175, y : 0})
         }
         if (boss1.body.position.y > player.body.position.y){
-            Matter.Body.applyForce(boss1.body, boss1.body.position, {x : 0, y : -0.1})
+            Matter.Body.applyForce(boss1.body, boss1.body.position, {x : 0, y : -0.15})
         }
         if (boss1.body.position.y < player.body.position.y){
             Matter.Body.applyForce(boss1.body, boss1.body.position, {x : 0, y : 0.01})
         }
 
 
-
-
-
-        sword = []
-        if (this.keyIsDown(81)){
-            sword.push(new Sword(p, engine, player.body.position.x + 50, player.body.position.y , "silver")) 
-        }
+        // sword = []
+        // if (this.keyIsDown(81)){
+        //     sword.push(new Sword(p, engine, player.body.position.x + 50, player.body.position.y , "silver")) 
+        // }
 
 
         //caps the max velocity at 10 in the right diection
@@ -198,6 +218,8 @@ let sketch = function (p: p5) {
 
         boss1.update();
 
+        //sword.draw();
+
         // Handle drawing of vertical spikes
         boss1.draw();
         obstacles.forEach(o => o.draw());
@@ -218,18 +240,13 @@ let sketch = function (p: p5) {
         player.draw();
         flagpole.forEach(f => f.draw());
 
-        //handles the drawing of the sword
-        player.draw();
-        sword.forEach(sw => sw.draw());
-
         //Handles the drawing of enemies
         player.draw();
         Enemies.forEach(e => e.draw());
 
-        // //Handles the drawing of the first boss
-        // player.draw();
-        // boss1.forEach(b1 => b1.draw()); {
-            //};
+        //
+        player.draw();
+        jumpPads.forEach(j => j.draw());
 
         // Draw boarders
         p.fill(0, 0, 20);
@@ -281,6 +298,12 @@ let sketch = function (p: p5) {
                 player.Spiked = true
         }})
 
+        player.SuperJump = false
+        jumpPads.forEach(j=> {
+            let collisonA = SAT.collides(player.body, j.body);
+            if (collisonA.collided) {
+                player.SuperJump = true
+        }})
 
         //check if the player is touching spikes
         player.Spiked1 = false

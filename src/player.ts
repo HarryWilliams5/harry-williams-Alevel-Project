@@ -10,6 +10,7 @@ class Player {
     Spiked1: boolean;
     Spiked2: boolean;
     Flagged: boolean;
+    SuperJump: boolean;
 
     constructor(s: p5, engine: Engine, posx: number, posy: number, width: number, height: number) {
         this.s = s;
@@ -22,6 +23,7 @@ class Player {
         this.Spiked1 = false
         this.Spiked2 = false
         this.Flagged = false
+        this.SuperJump = false
 
         World.add(engine.world, [this.body]);
     }
@@ -30,7 +32,7 @@ class Player {
     update() {
         // WASD keys move the player
         if (this.s.keyIsDown(87) && this.Grounded == true) {
-            Body.applyForce(this.body, this.body.position, { x: 0, y: -0.3});
+            Body.applyForce(this.body, this.body.position, { x: 0, y: -0.095});
         } 
         if (this.s.keyIsDown(65)) {
             Body.applyForce(this.body, this.body.position, { x: -0.005, y: 0 });
@@ -55,6 +57,9 @@ class Player {
         // moves the player to the next level when they touch the flag
         if (this.Flagged == true){
             Body.setPosition(this.body, {x: this.body.position.x + 500, y: 700 })
+        }
+        if (this.SuperJump == true && this.s.keyIsDown(87)){
+            Body.applyForce(this.body, this.body.position, {x : 0, y : -0.25})
         }
         
     }
