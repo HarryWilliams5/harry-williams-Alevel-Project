@@ -9,12 +9,12 @@ class Enemy {
     colour: string;
     
   
-    constructor(s: p5, engine: Engine, positionx: number, positiony: number, colour: string) {
+    constructor(s: p5, engine: Engine, positionx: number, positiony: number, width: number, height: number, colour: string) {
         this.s = s;
         this.colour = colour
         
         
-        this.body = Bodies.rectangle(positionx, positiony, 50, 50);
+        this.body = Bodies.rectangle(positionx, positiony, width, height);
         Body.setInertia(this.body, Infinity);
         
 

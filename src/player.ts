@@ -11,6 +11,7 @@ class Player {
     Spiked2: boolean;
     Flagged: boolean;
     SuperJump: boolean;
+    touchingBoss1: boolean;
 
     constructor(s: p5, engine: Engine, posx: number, posy: number, width: number, height: number) {
         this.s = s;
@@ -24,6 +25,7 @@ class Player {
         this.Spiked2 = false
         this.Flagged = false
         this.SuperJump = false
+        this.touchingBoss1 = false
 
         World.add(engine.world, [this.body]);
     }
@@ -51,6 +53,9 @@ class Player {
             Body.setPosition(this.body, {x: -150, y: 700});
         }
         if (this.Spiked2 == true){
+            Body.setPosition(this.body, {x: -150, y: 700});
+        }
+        if (this.touchingBoss1 == true){
             Body.setPosition(this.body, {x: -150, y: 700});
         }
         

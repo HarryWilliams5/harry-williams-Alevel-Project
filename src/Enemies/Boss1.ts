@@ -8,6 +8,7 @@ class Boss1 {
     body: Body;
     pupil: Body;
     colour: string;
+
     
   
     constructor(s: p5, engine: Engine, positionx: number, positiony: number, colour: string) {
@@ -15,6 +16,7 @@ class Boss1 {
         this.colour = colour
         this.body = Bodies.circle(positionx, positiony, 100)
         this.pupil = Bodies.circle(this.body.position.x, this.body.position.y, 10)
+
         
 
         Body.setInertia(this.body, Infinity);
@@ -27,6 +29,7 @@ class Boss1 {
         if (this.body.position.y > 600) {
             Body.applyForce(this.body, this.body.position, {x : 0, y : -0.1})
         }
+        
 
         
 

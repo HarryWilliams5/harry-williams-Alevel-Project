@@ -57,14 +57,13 @@ let sketch = function (p: p5) {
         ceiling = Bodies.rectangle(4812.5, -6000, 10000, 10000, { isStatic: true})
 
         //creating the player
-        player = new Player(p, engine, 4500, 600, 40, 80);
+        player = new Player(p, engine, -100, 600, 40, 80);
 
         //creating the first boss
-        boss1 = new Boss1(p, engine, 6000, -50000, 'red');
+        boss1 = new Boss1(p, engine, 6000, 600, 'white');
 
         
         
-
         obstacles = [];
         for (let i = 0; i < 5; i++) {
             obstacles.push(new Obstacle(p, engine, 400+(i*35), 750,'grey'));
@@ -112,8 +111,6 @@ let sketch = function (p: p5) {
         platforms.push(new Platforms(p, engine, 5400, -700, 2500, 10, '#000033', 'white'));
 
 
-        
-        
         walls = []
         walls.push(new Walls(p, engine, 2000, -75, 10, 1000, 'white'));
         walls.push(new Walls(p, engine, 2800, -75, 10, 1000, 'white'));
@@ -129,8 +126,12 @@ let sketch = function (p: p5) {
 
 
         Enemies = []
-        Enemies.push(new Enemy(p, engine, 300, 500, 'red'))
-        Enemies.push(new Enemy(p, engine, 900, 500, 'red'))
+        Enemies.push(new Enemy(p, engine, 300, 500, 50, 50, 'red'))
+        Enemies.push(new Enemy(p, engine, 950, -1000, 50, 50, 'red'))
+        Enemies.push(new Enemy(p, engine, 700, 200, 50, 50, 'red'))
+        Enemies.push(new Enemy(p, engine, 2000, 200, 80, 80, 'red'))
+
+
 
         jumpPads = []
         jumpPads.push(new JumpPads(p, engine, 4300, 765, 100, 10, 'cyan'))
@@ -173,10 +174,10 @@ let sketch = function (p: p5) {
         }
 
 
-        // sword = []
-        // if (this.keyIsDown(81)){
-        //     sword.push(new Sword(p, engine, player.body.position.x + 50, player.body.position.y , "silver")) 
-        // }
+       
+        if (this.keyIsDown(81)){
+            (new Sword(p, engine, player.body.position.x + 50, player.body.position.y , "silver")) 
+        }
 
 
         //caps the max velocity at 10 in the right diection
@@ -218,7 +219,10 @@ let sketch = function (p: p5) {
 
         boss1.update();
 
-        //sword.draw();
+        if (sword !== undefined){
+            sword.draw();
+        }
+        
 
         // Handle drawing of vertical spikes
         boss1.draw();
@@ -244,7 +248,7 @@ let sketch = function (p: p5) {
         player.draw();
         Enemies.forEach(e => e.draw());
 
-        //
+        //Handles the drawing of the jump pads
         player.draw();
         jumpPads.forEach(j => j.draw());
 
@@ -320,19 +324,30 @@ let sketch = function (p: p5) {
                 player.Spiked2 = true
         }})
 
-        // Check of the player is flagged
+       // Check of the player is flagged
         player.Flagged = false
         flagpole.forEach(f => {
             let collisionA = SAT.collides(player.body, f.body);
             if (collisionA.collided) {
                 player.Flagged = true
             }
-        }
-        )
+        })
+
+        player.touchingBoss1 = false
+            let collisionA = SAT.collides(player.body, boss1.body);
+            if (collisionA.collided) {
+                player.touchingBoss1 = true
+            }
 
         
-
-
+        // platforms.forEach(p => {
+        //     Enemies.forEach(e =>{
+        //     let collisionA = SAT.collides(e.body, p.body);
+        //     if (collisionA.collided) {
+                
+        //     }
+        // })})
+        
         //testing of the player is spiked
         console.log(player.Spiked)
 
