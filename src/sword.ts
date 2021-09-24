@@ -22,12 +22,10 @@ class Sword {
     }
 
     update() {
-        // if (this.s.keyIsDown(81)){
-
-        // }
+       
     }
 
-    delete(){
+    remove(){
        World.remove(this.engine.world, this.body)
     }
 
