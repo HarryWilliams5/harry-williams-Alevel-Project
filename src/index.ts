@@ -43,7 +43,7 @@ let sketch = function (p: p5) {
     var wallR: Matter.Body;
     var ceiling: Matter.Body;
     var cnv: p5.Renderer;
-    let sword: Sword;
+    let sword: Sword | undefined;
     let Enemies: Enemy[];
     let boss1: Boss1;
     let jumpPads : JumpPads[];
@@ -155,8 +155,19 @@ let sketch = function (p: p5) {
         
 
         //creating the sword
-        if (this.keyIsDown(81)){
-            sword = new Sword(p, engine, player.body.position.x + 100, player.body.position.y, 'grey')
+        // if (p.keyCode == p.LEFT_ARROW){
+        //     if (sword !== undefined) { 
+        //         sword.delete()
+        //     } else {
+        //         sword = new Sword(p, engine, player.body.position.x + 50, player.body.position.y, 'grey')
+        //     }
+        // }
+
+        if (p.keyCode == p.LEFT_ARROW && sword === undefined){
+            sword = new Sword(p, engine, player.body.position.x + 50, player.body.position.y, 'grey')
+        } else if(sword){
+            sword.delete()
+            sword = undefined
         }
         
         //instructions for boss1
@@ -172,13 +183,6 @@ let sketch = function (p: p5) {
         if (boss1.body.position.y < player.body.position.y){
             Matter.Body.applyForce(boss1.body, boss1.body.position, {x : 0, y : 0.01})
         }
-
-
-       
-        if (this.keyIsDown(81)){
-            (new Sword(p, engine, player.body.position.x + 50, player.body.position.y , "silver")) 
-        }
-
 
         //caps the max velocity at 10 in the right diection
         if (player.body.velocity.x >= 10) {
@@ -219,9 +223,7 @@ let sketch = function (p: p5) {
 
         boss1.update();
 
-        if (sword !== undefined){
-            sword.draw();
-        }
+        sword?.draw();
         
 
         // Handle drawing of vertical spikes
@@ -324,7 +326,7 @@ let sketch = function (p: p5) {
                 player.Spiked2 = true
         }})
 
-       // Check of the player is flagged
+        // Check of the player is flagged
         player.Flagged = false
         flagpole.forEach(f => {
             let collisionA = SAT.collides(player.body, f.body);

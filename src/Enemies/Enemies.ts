@@ -1,16 +1,18 @@
 import * as p5 from 'p5';
 
-import { Body, Bodies, Engine, World } from 'matter-js';
+import Matter, { Body, Bodies, Engine, World } from 'matter-js';
 import Player from '../player';
 
 class Enemy {
     s: p5;
+    engine: Matter.Engine;
     body: Body;
     colour: string;
     
   
     constructor(s: p5, engine: Engine, positionx: number, positiony: number, width: number, height: number, colour: string) {
         this.s = s;
+        this.engine = engine;
         this.colour = colour
         
         
@@ -38,6 +40,10 @@ class Enemy {
         })
         this.s.endShape(this.s.CLOSE);
     }
+
+    delete(){
+        World.remove(this.engine.world, this.body)
+     }
 }
 
 export default Enemy;

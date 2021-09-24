@@ -1,10 +1,11 @@
 import * as p5 from 'p5';
 
-import { Body, Bodies, Engine, World } from 'matter-js';
+import Matter, { Body, Bodies, Engine, World } from 'matter-js';
 import Player from './player';
 
 class Sword {
     s: p5;
+    engine: Engine;
     body: Body;
     colour: string;
     
@@ -12,6 +13,7 @@ class Sword {
     constructor(s: p5, engine: Engine, positionx: number, positiony: number, colour: string) {
         this.s = s;
         this.colour = colour
+        this.engine = engine
         
         this.body = Bodies.polygon(positionx, positiony, 3, 50, { isStatic: true});
         Body.rotate(this.body, Math.PI/3)
@@ -20,9 +22,13 @@ class Sword {
     }
 
     update() {
-        if (this.s.keyIsDown(81)){
+        // if (this.s.keyIsDown(81)){
 
-        }
+        // }
+    }
+
+    delete(){
+       World.remove(this.engine.world, this.body)
     }
 
     draw() {
