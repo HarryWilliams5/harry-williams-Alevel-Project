@@ -12,6 +12,7 @@ class Player {
     Flagged: boolean;
     SuperJump: boolean;
     touchingBoss1: boolean;
+    
 
     constructor(s: p5, engine: Engine, posx: number, posy: number, width: number, height: number) {
         this.s = s;
@@ -66,6 +67,7 @@ class Player {
         if (this.SuperJump == true && this.s.keyIsDown(87)){
             Body.applyForce(this.body, this.body.position, {x : 0, y : -0.25})
         }
+        
         
     }
 

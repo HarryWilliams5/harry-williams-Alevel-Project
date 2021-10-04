@@ -8,6 +8,7 @@ class Platforms {
     body: Body;
     colour: string;
     stroke: string;
+    engine: Engine;
 
     constructor(s: p5, engine: Engine,  positionx: number, positiony: number, width: number, height: number,
      colour: string, stroke: string,) {
@@ -15,7 +16,8 @@ class Platforms {
         this.s = s;
         this.colour = colour
         this.stroke = colour
-        
+        this.engine = engine
+
         this.body = Bodies.rectangle(positionx, positiony, width, height, { isStatic: true});
 
         World.add(engine.world, [this.body]);
@@ -23,6 +25,10 @@ class Platforms {
 
     update() {
 
+    }
+
+    remove(){
+        World.remove(this.engine.world, this.body)
     }
 
     draw() {

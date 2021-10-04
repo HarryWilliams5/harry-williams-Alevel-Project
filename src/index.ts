@@ -140,7 +140,7 @@ let sketch = function (p: p5) {
         p.background(0, 0, 20);
 
         //pupil of the first boss
-        
+
 
         //instructions for boss1
         if (boss1.body.position.x > player.body.position.x) {
@@ -318,6 +318,18 @@ let sketch = function (p: p5) {
             player.touchingBoss1 = true
         }
 
+        // sword.touchingEnemy = false
+        // Enemies.forEach(e => {
+        //     let collisonA = SAT.collides(sword?.body, e.body);
+        //     if (collisonA.collided) {
+        //         sword.touchingEnemy = true
+        //     }
+        // })
+
+        // if(sword.touchingEnemy = true){
+        //     Matter.Body.setPosition(Enemies.body, {x: -150, y: 700});
+        // }
+
 
         // platforms.forEach(p => {
         //     Enemies.forEach(e =>{
@@ -336,6 +348,7 @@ let sketch = function (p: p5) {
         // testing the players position
         console.log(player.body.position)
     };
+
     p.keyPressed = function () {
         if (p.keyCode == 81) {
             if (sword == undefined) {

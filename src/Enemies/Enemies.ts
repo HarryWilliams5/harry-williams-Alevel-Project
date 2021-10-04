@@ -2,6 +2,7 @@ import * as p5 from 'p5';
 
 import Matter, { Body, Bodies, Engine, World } from 'matter-js';
 import Player from '../player';
+import Sword from '../sword';
 
 class Enemy {
     s: p5;
@@ -27,8 +28,10 @@ class Enemy {
 
         if (this.body.position.y > 700){
             Body.setVelocity (this.body, {x : 0, y : -20})}
-        }
-
+    
+    }
+        
+        
 
     draw() {
          

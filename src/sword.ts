@@ -8,13 +8,15 @@ class Sword {
     engine: Engine;
     body: Body;
     colour: string;
+    // touchingEnemy: boolean;
     
   
     constructor(s: p5, engine: Engine, positionx: number, positiony: number, colour: string) {
         this.s = s;
         this.colour = colour
         this.engine = engine
-        
+        // this.touchingEnemy = false
+
         this.body = Bodies.polygon(positionx, positiony, 3, 50, { isStatic: true});
         Body.rotate(this.body, Math.PI/3)
 
@@ -22,7 +24,7 @@ class Sword {
     }
 
     update() {
-       
+      
     }
 
     remove(){
