@@ -48,11 +48,12 @@ let sketch = function (p: p5) {
         player = new Player(p, engine, -100, 600, 40, 80);
 
         //creating the first boss
-        boss1 = new Boss1(p, engine, 6000, 600, 'white');
+        boss1 = new Boss1(p, engine, 600000, 600, 'white');
 
 
 
         obstacles = [];
+        //spikes
         for (let i = 0; i < 5; i++) {
             obstacles.push(new Obstacle(p, engine, 400 + (i * 35), 750, 'grey'));
 
@@ -69,6 +70,8 @@ let sketch = function (p: p5) {
         for (let i = 0; i < 19; i++) {
             obstacles2.push(new Obstacle2(p, engine, 3185, 560 - (i * 30), 'grey'));
         }
+
+
 
         World.add(engine.world, [wallL, wallR, ceiling]);
 
@@ -110,7 +113,7 @@ let sketch = function (p: p5) {
         // walls.push(new Walls(p, engine, 100, 250, 100, 10, 'white'));
 
         flagpole = []
-        flagpole.push(new Flagpole(p, engine, 7000, 560, 'gold'))
+        flagpole.push(new Flagpole(p, engine, 8000, 560, 'gold'))
 
 
         Enemies = []
@@ -118,6 +121,8 @@ let sketch = function (p: p5) {
         Enemies.push(new Enemy(p, engine, 950, -1000, 50, 50, 'red'))
         Enemies.push(new Enemy(p, engine, 700, 200, 50, 50, 'red'))
         Enemies.push(new Enemy(p, engine, 2000, 200, 80, 80, 'red'))
+        Enemies.push(new Enemy(p, engine, 7650, 200, 500, 10, 'red'))
+        Enemies.push(new Enemy(p, engine, 3400, 800, 100, 100, 'red'))
 
 
 

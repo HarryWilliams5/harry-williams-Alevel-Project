@@ -27,7 +27,7 @@ class Enemy {
     update() {
 
         if (this.body.position.y > 700){
-            Body.setVelocity (this.body, {x : 0, y : -20})}
+            Body.setVelocity (this.body, {x : 0, y : -2000})}
     
     }
         
